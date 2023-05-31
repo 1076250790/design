@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.dao.OrdersDao">
+
+    <insert id="addOrders">
+        insert into orders(user_id, children, total_num, total_price, place_time, state, method, table_id, remarks)
+        VALUES (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7}, #{param8}, #{param9})
+    </insert>
+
+    <select id="getOrder" resultType="com.zjl.entity.Orders">
+        select *
+        from orders
+        where user_id = #{user_id}
+        order by place_time desc
+    </select>
+
+    <select id="getAllOrder" resultType="com.zjl.entity.Orders">
+        select user_id, children, total_num, total_price, place_time, complete_time, state, method, table_id
+        from orders
+        where (user_id = #{param1} or #{param1} ='')
+        order by place_time desc
+        limit #{param2}, #{param3}
+    </select>
+
+    <update id="updateOrderState">
+        update orders
+        set state = #{param4}, complete_time = #{param3}
+        where user_id = #{param1} and place_time = #{param2}
+    </update>
+
+    <select id="getOrderTotal" resultType="java.lang.Integer">
+        select count(*)
+        from orders
+    </select>
+</mapper>

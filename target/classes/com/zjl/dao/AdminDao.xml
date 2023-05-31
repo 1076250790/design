@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.dao.AdminDao">
+    <insert id="addAdmin">
+        insert into admin(admin_id, admin_name, admin_password, scope, state, power)
+        VALUES (#{admin_id}, #{admin_name}, #{admin_password}, #{scope}, #{state}, #{power})
+    </insert>
+
+    <select id="getAdminList" resultType="com.zjl.entity.Admin">
+        select *
+        from admin
+        where (scope = #{param1} or #{param1} = '')
+        limit #{param2}, #{param3}
+    </select>
+
+    <select id="getAdminNum" resultType="java.lang.Integer">
+        select count(*)
+        from admin
+    </select>
+
+    <select id="selectAdmin" resultType="java.lang.Integer">
+        select exists(select 1 from admin where admin_id = #{admin_id})
+    </select>
+
+    <select id="checkAdmin" resultType="java.lang.Integer">
+        select exists(select 1 from admin where admin_id = #{param1} and admin_password = #{param2})
+    </select>
+
+    <update id="changeAdminState">
+        update admin
+        set state = #{param2}
+        where admin_id = #{param1}
+    </update>
+
+    <select id="getAdmin" resultType="com.zjl.entity.Admin">
+        select *
+        from admin
+        where admin_id = #{admin_id}
+    </select>
+
+    <update id="editAdmin">
+        update admin
+        set admin_name = #{admin_name}, admin_password = #{admin_password}, scope = #{scope}, state = #{state}, power = #{power}
+        where admin_id = #{admin_id}
+    </update>
+
+    <delete id="removeAdmin">
+        delete
+        from admin
+        where admin_id = #{admin_id}
+    </delete>
+
+    <select id="getAdminPower" resultType="java.lang.Integer">
+        select power
+        from admin
+        where admin_id = #{admin_id}
+    </select>
+
+    <select id="getAdminState" resultType="java.lang.Integer">
+        select state
+        from admin
+        where admin_id = #{admin_id}
+    </select>
+
+    <select id="getAdminName" resultType="java.lang.String">
+        select admin_name
+        from admin
+        where admin_id = #{admin_id}
+    </select>
+</mapper>

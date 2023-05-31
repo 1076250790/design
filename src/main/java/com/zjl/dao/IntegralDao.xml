@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.dao.IntegralDao">
+    <insert id="addUserIntegral">
+        insert into integral(user_id, integral)
+        VALUES (#{param1}, #{param2})
+    </insert>
+
+    <select id="selectIntegralByUserId" resultType="java.lang.Integer">
+        select integral
+        from integral
+        where user_id = #{user_id}
+    </select>
+
+    <update id="updateUserIntegral">
+        update integral
+        set integral = #{param2}
+        where user_id = #{param1}
+    </update>
+
+    <select id="selectUserByUserId" resultType="com.zjl.entity.Integral">
+        select * from integral where user_id = #{user_id}
+    </select>
+</mapper>

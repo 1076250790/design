@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.dao.ReplyDao">
+
+    <select id="getAllReply" resultType="com.zjl.entity.Reply">
+        select *
+        from reply
+        where (admin_name = #{param1} or #{param1} = '')
+        order by complete_time desc
+        limit #{param2}, #{param3}
+    </select>
+
+    <select id="getReplyTotal" resultType="java.lang.Integer">
+        select count(*)
+        from reply
+    </select>
+
+    <select id="getReplyByUserId" resultType="com.zjl.entity.Reply">
+        select *
+        from reply
+        where user_id = #{param1} and food_id = #{param2} and place_time = #{param3}
+    </select>
+
+    <delete id="deleteReply">
+        delete
+        from reply
+        where admin_name = #{param1} and complete_time = #{param2}
+    </delete>
+</mapper>

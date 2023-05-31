@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.dao.ScoreDao">
+
+    <insert id="addScore">
+        insert into score(user_id, place_time, score)
+        values (#{param1}, #{param2}, #{param3})
+    </insert>
+
+    <select id="getScoreList" resultType="com.zjl.entity.Score">
+        select *
+        from score
+    </select>
+
+    <select id="checkScore" resultType="java.lang.Boolean">
+        select exists(select 1 from score where user_id = #{param1} and place_time = #{param2})
+    </select>
+
+    <select id="getScoreByOrder" resultType="com.zjl.entity.Score">
+        select *
+        from score
+        where user_id = #{param1} and place_time = #{param2}
+    </select>
+
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.dao.EvaluationDao">
+
+    <select id="getAllEvaluationByUser" resultType="com.zjl.entity.Evaluation">
+        select *
+        from evaluation
+        where (user_id = #{param1} or #{param1} = '')
+        order by place_date desc
+        limit #{param2}, #{param3}
+    </select>
+
+    <select id="getAllEvaluationByFood" resultType="com.zjl.entity.Evaluation">
+        select *
+        from evaluation
+        where (food_id = #{param1} or #{param1} = '')
+        limit #{param2}, #{param3}
+    </select>
+
+    <select id="getEvaluationTotal" resultType="java.lang.Integer">
+        select count(*)
+        from evaluation
+    </select>
+
+    <insert id="addFoodEvaluation">
+        insert into evaluation(food_id, user_id, place_date, content, likes)
+        VALUES (#{param1}, #{param2}, #{param3}, #{param4}, 0)
+    </insert>
+
+    <insert id="addEvaluationByAdmin">
+        insert into reply (admin_name, food_id, user_id, place_time, complete_time, content)
+        VALUES (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6})
+    </insert>
+
+    <delete id="deleteEvaluation">
+        delete
+        from evaluation
+        where user_id = #{param1} and place_date = #{param2}
+    </delete>
+</mapper>

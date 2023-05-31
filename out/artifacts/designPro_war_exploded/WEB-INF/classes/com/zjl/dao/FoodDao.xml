@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.dao.FoodDao">
+    <insert id="addFood">
+        insert into food(food_id, food_name, food_pic, food_price, type_id)
+        VALUES (#{param1}, #{param2}, #{param3}, #{param4}, #{param5})
+    </insert>
+
+    <update id="updateFood">
+        update food
+        set food_pic = #{param2}, food_price = #{param3}
+        where food_id = #{param1}
+    </update>
+
+    <select id="getTypeId" resultType="java.lang.Integer">
+        select type_id
+        from foodtype
+    </select>
+
+    <select id="getTypeName" resultType="java.lang.String">
+        select type_name
+        from foodtype
+        where type_id = #{type_id}
+    </select>
+
+    <select id="getTypePinYin" resultType="java.lang.String">
+        select type_pinyin
+        from foodtype
+        where type_id = #{type_id}
+    </select>
+
+    <select id="getFood" resultType="com.zjl.entity.Food">
+        select *
+        from food
+        where type_id = #{type_id}
+    </select>
+
+    <select id="getFoodMsg" resultType="com.zjl.entity.FoodIntro">
+        select *
+        from foodintro
+        where food_id = #{food_id}
+    </select>
+
+    <select id="getFoodEva" resultType="com.zjl.entity.Evaluation">
+        select *
+        from evaluation
+        where food_id = #{param1}
+    </select>
+
+    <select id="getFoodPic" resultType="java.lang.String">
+        select food_pic
+        from food
+        where food_name = #{food_name}
+    </select>
+
+
+
+
+
+
+    <select id="getFoodData" resultType="com.zjl.entity.Food">
+        select *
+        from food
+        where (food_name = #{param1} or #{param1} = '')
+        limit #{param2}, #{param3};
+    </select>
+
+    <select id="getFoodTotal" resultType="java.lang.Integer">
+        select count(*) as total from food
+    </select>
+
+    <select id="getUpdateFood" resultType="com.zjl.entity.Food">
+        select *
+        from food
+        where food_id = #{food_id}
+    </select>
+
+    <select id="getFoodType" resultType="com.zjl.entity.FoodType">
+        select * from foodtype
+    </select>
+
+    <select id="getFoodId" resultType="java.lang.Integer">
+        select food_id from food order by food_id desc limit 1
+    </select>
+
+    <select id="getTypeIdByName" resultType="java.lang.Integer">
+        select type_id from foodtype where type_name = #{type_name}
+    </select>
+
+    <delete id="removeFoodById">
+        delete
+        from food
+        where food_id = #{food_id};
+    </delete>
+    <delete id="removeFoodIntroById">
+        delete
+        from foodintro
+        where food_id = #{food_id}
+    </delete>
+
+    <insert id="createFoodIntro">
+        insert into foodintro (food_id, yuanliao, fenliang, hunsu, fuliao, kouwei)
+        VALUES (#{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6})
+    </insert>
+
+    <update id="updateFoodIntro">
+        update foodintro
+        set food_id = #{param1}, yuanliao = #{param2}, fenliang = #{param3}, hunsu = #{param4}, fuliao = #{param5}, kouwei = #{param6}
+        where food_id = #{param1}
+    </update>
+
+    <select id="getTypeIdByTypeName" resultType="java.lang.Integer">
+        select type_id
+        from foodtype
+        where type_name = #{param1} or #{param1} = ''
+        limit #{param2}, #{param3}
+    </select>
+
+    <select id="getTypeTotal" resultType="java.lang.Integer">
+        select count(*)
+        from foodtype
+    </select>
+
+    <update id="updateFoodType">
+        update food
+        set type_id = #{param2}
+        where food_id = #{param1}
+    </update>
+
+    <select id="getFoodTypeId" resultType="java.lang.Integer">
+        select type_id from foodtype order by type_id desc limit 1
+    </select>
+
+    <insert id="addFoodType">
+        insert into foodtype (type_id, type_name, type_pinyin)
+        values (#{param1}, #{param2}, #{param3})
+    </insert>
+
+    <select id="selectFoodType" resultType="java.lang.Integer">
+        select exists(select 1 from foodtype where type_name = #{param1} or type_pinyin = #{param2})
+    </select>
+
+    <delete id="deleteType">
+        delete
+        from foodtype
+        where type_pinyin = #{type_pinyin}
+    </delete>
+
+    <select id="getTypeIdByTypePinYin" resultType="java.lang.Integer">
+        select type_id
+        from foodtype
+        where type_pinyin = #{type_pinyin}
+    </select>
+
+    <update id="updateTypeMsg">
+        update foodtype
+        set type_name = #{param2}, type_pinyin = #{param3}
+        where type_id = #{param1}
+    </update>
+</mapper>

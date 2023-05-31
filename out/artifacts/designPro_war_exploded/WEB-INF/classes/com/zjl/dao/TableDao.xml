@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zjl.dao.TableDao">
+    <select id="getAllTable" resultType="com.zjl.entity.Table">
+        select *
+        from `dining-table`
+        where (table_id = #{param1} or #{param1} = '')
+        limit #{param2}, #{param3}
+    </select>
+
+    <select id="getTableList" resultType="com.zjl.entity.Table">
+        select *
+        from `dining-table`
+        where table_category = #{param1} and state = #{param2}
+    </select>
+
+    <select id="tableTotal" resultType="java.lang.Integer">
+        select count(*)
+        from `dining-table`
+    </select>
+
+    <select id="selectLastTableId" resultType="java.lang.String">
+        select table_id
+        from `dining-table`
+        order by table_id desc limit 1
+    </select>
+
+    <insert id="addTable">
+        insert into `dining-table` (table_id, table_category, person, state)
+        VALUES (#{param1}, #{param2}, #{param3}, #{param4})
+    </insert>
+
+    <delete id="deleteTable">
+        delete
+        from `dining-table`
+        where table_id = #{table_id}
+    </delete>
+
+    <update id="editTable">
+        update `dining-table`
+        set state = #{param2}
+        where table_id = #{param1}
+    </update>
+</mapper>
